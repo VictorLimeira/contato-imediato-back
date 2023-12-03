@@ -37,9 +37,36 @@ class ContactTest extends TestCase
             ->getJson('api/contacts');
 
         $response->assertStatus(200);
-        $response->assertJsonCount(6);
+        $this->assertCount(6, $response->decodeResponseJson());
         $response->assertJsonStructure([
             ['id', 'name', 'description', 'user_id', 'created_at', 'updated_at', 'deleted_at']
+        ]);
+        $response->assertJsonFragment([
+            'id' => $contact->id,
+            'name' => $contact->name,
+            'description' => $contact->description,
+            'user_id' => $this->user->id
+        ]);
+    }
+
+    public function test_it_should_show_contacts(): void
+    {
+        $contact = Contact::factory()->create(['user_id' => $this->user->id]);
+        Contact::factory(5)->create(['user_id' => $this->user->id]);
+
+        $response = $this
+            ->withHeaders(['Authorization' => "Bearer {$this->user->ulid_token}"])
+            ->getJson("api/contacts/{$contact->id}");
+
+        $response->assertStatus(200);
+        $response->assertJsonStructure([
+            'id',
+            'name',
+            'description',
+            'user_id',
+            'created_at',
+            'updated_at',
+            'deleted_at'
         ]);
         $response->assertJsonFragment([
             'id' => $contact->id,

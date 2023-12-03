@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\Contact;
+use App\Models\Medium;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +19,9 @@ class MediumFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'category' => Medium::CATEGORIES[array_rand(Medium::CATEGORIES)],
+	        'value' => fake()->text(255),
+            'contact_id' => Contact::factory()
         ];
     }
 }
