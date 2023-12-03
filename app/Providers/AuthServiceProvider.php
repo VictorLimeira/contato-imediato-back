@@ -26,7 +26,7 @@ class AuthServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Auth::viaRequest('ulid-token', function (Request $request) {
-            return User::where('ulid_token', (string) $request->personal_code)->first();
+            return User::where('ulid_token', (string) $request->bearerToken())->first();
         });
     }
 }
