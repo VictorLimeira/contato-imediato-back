@@ -1,6 +1,7 @@
 <?php
 
-use App\Http\Controllers\RegisterNewUserController;
+use App\Http\Controllers\API\ContactController;
+use App\Http\Controllers\API\RegisterNewUserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -21,4 +22,6 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::get('profile', function (Request $request) {
         return $request->user();
     });
+
+    Route::apiResource('contacts', ContactController::class);
 });
