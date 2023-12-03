@@ -14,7 +14,7 @@ class ContactController extends Controller
      */
     public function index()
     {
-        $this->authorize('viewAny');
+        $this->authorize('viewAny', Contact::class);
 
         return Contact::where('user_id', request()->user()->id)->get();
     }
@@ -24,7 +24,7 @@ class ContactController extends Controller
      */
     public function store(StoreContactRequest $request)
     {
-        $this->authorize('create');
+        $this->authorize('create', Contact::class);
 
         $data = $request->safe()->only(['name', 'description']);
         $data['user_id'] = request()->user()->id;

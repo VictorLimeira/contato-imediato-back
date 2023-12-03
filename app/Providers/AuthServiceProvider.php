@@ -5,8 +5,10 @@ namespace App\Providers;
 // use Illuminate\Support\Facades\Gate;
 
 use App\Models\Contact;
+use App\Models\Medium;
 use App\Models\User;
 use App\Policies\ContactPolicy;
+use App\Policies\MediumPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -21,6 +23,7 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         Contact::class => ContactPolicy::class,
+        Medium::class => MediumPolicy::class,
     ];
 
     /**
